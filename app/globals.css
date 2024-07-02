@@ -8,6 +8,18 @@
     --background-end-rgb: 0, 0, 0;
 }
 
+@font-face {
+    font-family: 'Anton';
+    src: url('../public/fonts/Anton-Regular.woff');
+}
+@font-face {
+    font-family: 'Open Sans';
+    src: url("../public/fonts/OpenSans-Semibold.woff");
+}
+@font-face {
+    font-family: 'Open Sans Bold';
+    src: url("../public/fonts/OpenSans-Bold.woff");
+}
 
 body {
     color: rgb(var(--foreground-rgb));

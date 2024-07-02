@@ -12,6 +12,8 @@ export interface Config {
         pages: Page;
         media: Media;
         listings: Listing;
+        locations: Location;
+        companies: Company;
         'payload-preferences': PayloadPreference;
         'payload-migrations': PayloadMigration;
     };
@@ -26,7 +28,7 @@ export interface Config {
 export interface User {
     id: number;
     role?: ('admin' | 'apartment-manager') | null;
-    listing_access?: (number | Listing)[] | null;
+    company_access?: (number | Company)[] | null;
     updatedAt: string;
     createdAt: string;
     email: string;
@@ -40,32 +42,18 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "listings".
+ * via the `definition` "companies".
  */
-export interface Listing {
+export interface Company {
     id: number;
     title: string;
-    content?:
-        | {
-        title: string;
-        content?:
-            | {
-            [k: string]: unknown;
-        }[]
-            | null;
-        images?:
-            | {
-            image?: number | Media | null;
-            id?: string | null;
-        }[]
-            | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'MediaBlock';
-    }[]
-        | null;
+    slug?: string | null;
+    publishedAt?: string | null;
+    featuredImage?: number | Media | null;
+    listing_limit: number;
     updatedAt: string;
     createdAt: string;
+    _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -120,7 +108,25 @@ export interface Page {
     title: string;
     slug?: string | null;
     publishedAt?: string | null;
+    featuredImage?: number | Media | null;
     content?:
+        | (
+        | {
+        content: {
+            [k: string]: unknown;
+        }[];
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'ContentBlock';
+    }
+        | {
+        header: string;
+        showSearch?: boolean | null;
+        image?: number | Media | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'HeaderBlock';
+    }
         | {
         title: string;
         content?:
@@ -128,6 +134,20 @@ export interface Page {
             [k: string]: unknown;
         }[]
             | null;
+        button?: {
+            ButtonText?: string | null;
+            ExternalLink?: boolean | null;
+            Page?:
+                | ({
+                relationTo: 'pages';
+                value: number | Page;
+            } | null)
+                | ({
+                relationTo: 'listings';
+                value: number | Listing;
+            } | null);
+            Url?: string | null;
+        };
         images?:
             | {
             image?: number | Media | null;
@@ -137,7 +157,145 @@ export interface Page {
         id?: string | null;
         blockName?: string | null;
         blockType: 'MediaBlock';
-    }[]
+    }
+        )[]
+        | null;
+    updatedAt: string;
+    createdAt: string;
+    _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "listings".
+ */
+export interface Listing {
+    id: number;
+    title: string;
+    slug?: string | null;
+    publishedAt?: string | null;
+    featuredImage?: number | Media | null;
+    company: number | Company;
+    content?:
+        | (
+        | {
+        content: {
+            [k: string]: unknown;
+        }[];
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'ContentBlock';
+    }
+        | {
+        header: string;
+        showSearch?: boolean | null;
+        image?: number | Media | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'HeaderBlock';
+    }
+        | {
+        title: string;
+        content?:
+            | {
+            [k: string]: unknown;
+        }[]
+            | null;
+        button?: {
+            ButtonText?: string | null;
+            ExternalLink?: boolean | null;
+            Page?:
+                | ({
+                relationTo: 'pages';
+                value: number | Page;
+            } | null)
+                | ({
+                relationTo: 'listings';
+                value: number | Listing;
+            } | null);
+            Url?: string | null;
+        };
+        images?:
+            | {
+            image?: number | Media | null;
+            id?: string | null;
+        }[]
+            | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'MediaBlock';
+    }
+        )[]
+        | null;
+    street?: string | null;
+    city?: string | null;
+    state?: string | null;
+    zip?: string | null;
+    latitude?: string | null;
+    longitude?: string | null;
+    updatedAt: string;
+    createdAt: string;
+    _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "locations".
+ */
+export interface Location {
+    id: number;
+    title: string;
+    slug?: string | null;
+    publishedAt?: string | null;
+    featuredImage?: number | Media | null;
+    content?:
+        | (
+        | {
+        content: {
+            [k: string]: unknown;
+        }[];
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'ContentBlock';
+    }
+        | {
+        header: string;
+        showSearch?: boolean | null;
+        image?: number | Media | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'HeaderBlock';
+    }
+        | {
+        title: string;
+        content?:
+            | {
+            [k: string]: unknown;
+        }[]
+            | null;
+        button?: {
+            ButtonText?: string | null;
+            ExternalLink?: boolean | null;
+            Page?:
+                | ({
+                relationTo: 'pages';
+                value: number | Page;
+            } | null)
+                | ({
+                relationTo: 'listings';
+                value: number | Listing;
+            } | null);
+            Url?: string | null;
+        };
+        images?:
+            | {
+            image?: number | Media | null;
+            id?: string | null;
+        }[]
+            | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'MediaBlock';
+    }
+        )[]
         | null;
     updatedAt: string;
     createdAt: string;
