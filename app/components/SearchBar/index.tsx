@@ -78,7 +78,10 @@ const SearchBar = () => {
             setIsLoading(true);
             if (process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL && debouncedSearchTerm) {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/listings/by-address`, {
-                    body: JSON.stringify({"address": debouncedSearchTerm}),
+                    body: JSON.stringify({
+                        "address": debouncedSearchTerm,
+                        "limit": 5
+                    }),
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
