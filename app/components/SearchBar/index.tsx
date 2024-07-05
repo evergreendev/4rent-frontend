@@ -109,7 +109,7 @@ const SearchBar = () => {
                placeholder="Area, City, Town or Address"/>
         {
             isLoading
-                ? <div className="h-24 w-full bg-slate-200 border-b-2 border-b-slate-600 animate-pulse"/>
+                ? <div className="h-1 w-full bg-blue-400 animate-pulse"/>
                 : <Results results={results} showResults={showResults}/>
         }
     </div>
