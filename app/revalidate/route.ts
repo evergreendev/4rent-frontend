@@ -19,6 +19,10 @@ export async function GET(request: NextRequest): Promise<Response> {
         revalidateTag(`${collection}_${slug}`)
         return NextResponse.json({ revalidated: true, now: Date.now() })
     }
+    if (collection) {
+        revalidateTag(`${collection}_`)
+        return NextResponse.json({ revalidated: true, now: Date.now() })
+    }
 
     return NextResponse.json({ revalidated: false, now: Date.now() })
 }
