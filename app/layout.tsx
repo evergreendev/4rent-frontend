@@ -1,6 +1,7 @@
 import type {Metadata} from "next";
 import {Inter} from "next/font/google";
 import "./globals.css";
+import Header from "@/app/components/Header";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -34,9 +35,11 @@ export default async function RootLayout({
                                    }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const meta = await getMeta();
     return (
         <html lang="en">
         <body className={inter.className}>
+        <Header image={meta.siteLogo}/>
         {children}
         </body>
         </html>
