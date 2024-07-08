@@ -1,11 +1,15 @@
 import escapeHtml from 'escape-html'
 import {Text} from 'slate'
+import Link from "next/link";
+import React from 'react';
 
 const ContentBlock = ({block}:{block:any}) => {
+    let nodeIndex = 0;
 
     function serialize(node:any) {
+        nodeIndex++;
         if (Text.isText(node)) {
-            return escapeHtml(node.text)
+            return <React.Fragment key={node.text}>{escapeHtml(node.text)}</React.Fragment>
         }
 
         const children = node.children.map((n: any) => {
@@ -14,17 +18,17 @@ const ContentBlock = ({block}:{block:any}) => {
 
         switch (node.type) {
             case 'h2':
-                return <h2>{children}</h2>
+                return <h2 key={nodeIndex}>{children}</h2>
             case 'quote':
-                return <blockquote><p>{children}</p></blockquote>
+                return <blockquote key={nodeIndex}><p>{children}</p></blockquote>
             case 'paragraph':
-                return <p>{children}</p>
+                return <p key={nodeIndex}>{children}</p>
             case 'ul':
-                return <ul>{children}</ul>
+                return <ul key={nodeIndex}>{children}</ul>
             case 'li':
-                return <li>{children}</li>
+                return <li key={nodeIndex}>{children}</li>
             case 'link':
-                return <a href={escapeHtml(node.url)}>{children}</a>
+                return <Link key={nodeIndex} href={escapeHtml(node.url)}>{children}</Link>
             default:
                 return children
         }
