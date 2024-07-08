@@ -5,7 +5,7 @@
 :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 248, 248, 248;
-    --background-end-rgb: 200, 200, 200;
+    --background-end-rgb: 248, 248, 248;
 }
 
 @font-face {
