@@ -19,6 +19,7 @@ export interface Config {
     };
     globals: {
         navigation: Navigation;
+        'site-options': SiteOption;
     };
 }
 /**
@@ -158,6 +159,26 @@ export interface Page {
         blockName?: string | null;
         blockType: 'MediaBlock';
     }
+        | {
+        collections: (
+            | {
+            relationTo: 'pages';
+            value: number | Page;
+        }
+            | {
+            relationTo: 'listings';
+            value: number | Listing;
+        }
+            | {
+            relationTo: 'locations';
+            value: number | Location;
+        }
+            )[];
+        type: 'featured_images' | 'buttons';
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'CollectionGroupBlock';
+    }
         )[]
         | null;
     updatedAt: string;
@@ -223,6 +244,26 @@ export interface Listing {
         id?: string | null;
         blockName?: string | null;
         blockType: 'MediaBlock';
+    }
+        | {
+        collections: (
+            | {
+            relationTo: 'pages';
+            value: number | Page;
+        }
+            | {
+            relationTo: 'listings';
+            value: number | Listing;
+        }
+            | {
+            relationTo: 'locations';
+            value: number | Location;
+        }
+            )[];
+        type: 'featured_images' | 'buttons';
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'CollectionGroupBlock';
     }
         )[]
         | null;
@@ -295,6 +336,26 @@ export interface Location {
         blockName?: string | null;
         blockType: 'MediaBlock';
     }
+        | {
+        collections: (
+            | {
+            relationTo: 'pages';
+            value: number | Page;
+        }
+            | {
+            relationTo: 'listings';
+            value: number | Listing;
+        }
+            | {
+            relationTo: 'locations';
+            value: number | Location;
+        }
+            )[];
+        type: 'featured_images' | 'buttons';
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'CollectionGroupBlock';
+    }
         )[]
         | null;
     updatedAt: string;
@@ -351,3 +412,19 @@ export interface Navigation {
     updatedAt?: string | null;
     createdAt?: string | null;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-options".
+ */
+export interface SiteOption {
+    id: number;
+    siteTitle: string;
+    siteDescription: string;
+    siteLogo: number | Media;
+    siteLogoAlt?: number | Media | null;
+    updatedAt?: string | null;
+    createdAt?: string | null;
+}
+
+
+

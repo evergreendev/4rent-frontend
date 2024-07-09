@@ -6,7 +6,7 @@ import BlockRenderer from "@/app/BlockRenderer";
 
 async function getData(tag:string, page?: number) {
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/pages/?limit=10${page ? `&page=${page}` : ""}&locale=undefined&draft=false&depth=1`,
+        `${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/pages/?limit=10${page ? `&page=${page}` : ""}&locale=undefined&draft=false&depth=2`,
         {
             next: {
                 tags: [tag]
