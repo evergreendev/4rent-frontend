@@ -14,8 +14,11 @@ const Results = ({results, showResults}: { results: (Listing & { distance: numbe
         setSearchResultsDom(document.getElementById("search-results"));
     }, []);
     useEffect(() => {
-        searchResultsDom?.scrollIntoView({behavior: "smooth"});
-    }, [searchResultsDom]);
+        if (results.length > 0){
+            searchResultsDom?.scrollIntoView({behavior: "smooth"});
+        }
+
+    }, [searchResultsDom, results]);
 
     if (!showResults) return <></>;
 
