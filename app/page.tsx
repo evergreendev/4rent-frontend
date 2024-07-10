@@ -1,12 +1,20 @@
 "use server"
 import {notFound} from "next/navigation";
-import findDocumentByField from "@/app/utils/findDocumentByField";
-import {Page} from "@/app/types/payloadTypes";
 import BlockRenderer from "@/app/BlockRenderer";
+import qs from "qs";
 
-async function getData(tag:string, page?: number) {
+async function getData(query:any, tag:string, page?:string){
+    const stringifiedQuery = qs.stringify(
+        {
+            where: query,
+        },
+        {
+            addQueryPrefix: true
+        }
+    );
+
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/pages/?limit=10${page ? `&page=${page}` : ""}&locale=undefined&draft=false&depth=2`,
+        `${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/pages/${stringifiedQuery}&depth=2`,
         {
             next: {
                 tags: [tag]
@@ -20,11 +28,15 @@ async function getData(tag:string, page?: number) {
 }
 
 export default async function Home() {
-    const data = await findDocumentByField<Page>(getData, "home", "slug","pages_home");
+    const data = await getData({
+        slug:{
+            equals: 'home'
+        }
+    }, "pages_home");
 
     return (
         <main>
-            <BlockRenderer blocks={data.content}/>
+            <BlockRenderer blocks={data.docs[0].content}/>
         </main>
     );
 }
