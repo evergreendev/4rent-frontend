@@ -16,7 +16,7 @@ const Map = ({listings}:{listings:Listing[]}) => {
         const map = Radar.ui.map({
             container: 'map',
             style: 'radar-default-v1',
-            center: [95.7129,37.0902],
+            center: [-103.2310,43.0805],
             zoom: 11,
         });
 

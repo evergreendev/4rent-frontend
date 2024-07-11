@@ -5,8 +5,10 @@ import qs from "qs";
 import BlockRenderer from "@/app/BlockRenderer";
 import Image from "next/image"
 import Map from "@/app/components/Map";
+import Pagination from "@/app/components/Pagination";
+import {Suspense} from "react";
 
-async function getLocation(query:any, tag:string, page?:string){
+async function getLocation(query:any, tag:string){
     const stringifiedQuery = qs.stringify(
         {
             where: query,
@@ -17,7 +19,7 @@ async function getLocation(query:any, tag:string, page?:string){
     );
 
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/locations/${stringifiedQuery}${page ? `&page=${page}`:""}`,
+        `${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/locations/${stringifiedQuery}`,
         {
             next: {
                 tags: [tag]
@@ -30,7 +32,7 @@ async function getLocation(query:any, tag:string, page?:string){
     return res.json();
 }
 
-async function getListings(query: any, tag:string, page?: number){
+async function getListings(query: any, tag:string, page?: string){
     const stringifiedQuery = qs.stringify(
         {
             where: query,
@@ -40,7 +42,7 @@ async function getListings(query: any, tag:string, page?: number){
         }
     );
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/listings/${stringifiedQuery}&depth=0`,{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/listings/${stringifiedQuery}&depth=0${page ? `&page=${page}`:""}`,{
         next: {
             tags: [tag]
         }
@@ -48,12 +50,13 @@ async function getListings(query: any, tag:string, page?: number){
     return await res.json();
 }
 
-export default async function LocationPage({ params }: { params: { slug: string, page: string } }) {
+export default async function LocationPage({ params, searchParams }: { params: { slug: string }, searchParams?: { page?: string} }) {
+    const currentPage = searchParams?.page || "1";
     const location = await getLocation({
     slug: {
         equals: params.slug
     }
-    }, `locations_${params.slug}`,"1");
+    }, `locations_${params.slug}`);
 
     const data = location.docs[0];
 
@@ -62,7 +65,7 @@ export default async function LocationPage({ params }: { params: { slug: string,
         locations: {
             contains: data.id
         }
-    },"listings_",);
+    },"listings_",currentPage);
 
     return (
         <main className="flex flex-wrap">
@@ -85,13 +88,17 @@ export default async function LocationPage({ params }: { params: { slug: string,
                     <h2 className="text-red-600 font-anton text-3xl mb-4">{data.title}</h2>
                 <div className="bg-slate-200 text-slate-700 p-4 shadow-md">
                     <BlockRenderer blocks={data.content}/>
-                    {
-                        listings.docs.map((listing:Listing) => {
-                            return <div key={listing.id} className="p-4 bg-slate-300 shadow-sm mb-7">
-                                <h3 className="text-2xl">{listing.title}</h3>
-                            </div>
-                        })
-                    }
+                    <Suspense key={currentPage} fallback={null}>
+                        {
+                            listings.docs.map((listing:Listing) => {
+                                return <div key={listing.id} className="p-4 bg-slate-300 shadow-sm mb-7">
+                                    <h3 className="text-2xl">{listing.title}</h3>
+                                </div>
+                            })
+                        }
+                    </Suspense>
+
+                    <Pagination totalPages={listings.totalPages}/>
                 </div>
             </div>
             <div className="grow flex">
