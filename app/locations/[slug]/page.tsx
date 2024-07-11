@@ -7,6 +7,7 @@ import Image from "next/image"
 import Map from "@/app/components/Map";
 import Pagination from "@/app/components/Pagination";
 import {Suspense} from "react";
+import Link from "next/link";
 
 async function getLocation(query:any, tag:string){
     const stringifiedQuery = qs.stringify(
@@ -42,7 +43,7 @@ async function getListings(query: any, tag:string, page?: string){
         }
     );
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/listings/${stringifiedQuery}&depth=0${page ? `&page=${page}`:""}`,{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/listings/${stringifiedQuery}&depth=1&limit=5${page ? `&page=${page}`:""}`,{
         next: {
             tags: [tag]
         }
@@ -84,15 +85,32 @@ export default async function LocationPage({ params, searchParams }: { params: {
                 src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${data.featuredImage.url}`}
                 alt={data.featuredImage.alt || ""}/> : ""
         }
-            <div className="bg-white max-w-screen-2xl w-full p-8">
+            <div className="bg-white max-w-screen-lg w-full p-8  min-h-screen">
                     <h2 className="text-red-600 font-anton text-3xl mb-4">{data.title}</h2>
                 <div className="bg-slate-200 text-slate-700 p-4 shadow-md">
                     <BlockRenderer blocks={data.content}/>
                     <Suspense key={currentPage} fallback={null}>
                         {
                             listings.docs.map((listing:Listing) => {
-                                return <div key={listing.id} className="p-4 bg-slate-300 shadow-sm mb-7">
-                                    <h3 className="text-2xl">{listing.title}</h3>
+                                return <div key={listing.id} className="bg-slate-300 shadow-sm mb-6 flex">
+                                    {
+                                        listing.featuredImage && typeof listing.featuredImage !== "number"
+                                            ? <Image
+                                                className="size-48 object-cover hidden sm:block"
+                                                src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${listing.featuredImage.url}`}
+                                                width={listing.featuredImage.width||0}
+                                                height={listing.featuredImage.height || 0}
+                                                alt={`${listing.featuredImage.alt}`}/>
+                                            : ""
+                                    }
+                                    <div className="p-4">
+                                        <h3 className="text-2xl">{listing.title}</h3>
+                                        <address>
+                                            <p>{listing.street}</p>
+                                            <p>{listing.city}, {listing.state} {listing.zip}</p>
+                                        </address>
+                                        <Link href={`/listings/${listing.slug}`} aria-label={``}>Learn More</Link>
+                                    </div>
                                 </div>
                             })
                         }
