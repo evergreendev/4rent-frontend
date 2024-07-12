@@ -12,7 +12,6 @@ const Button = ({slug, collection}: {
 }
 
 const ListingImageCard = ({slug, collection}: { slug: string, collection: Page | Listing | Location }) => {
-    console.log(collection)
     if (!collection.featuredImage || typeof collection.featuredImage === "number" || !process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL) return <></>
 
     return <Link href={`/${slug}/${collection.slug}`}
