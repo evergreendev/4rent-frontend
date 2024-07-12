@@ -87,16 +87,16 @@ export default async function LocationPage({ params, searchParams }: { params: {
         }
             <div className="bg-white max-w-screen-lg w-full p-8  min-h-screen">
                     <h2 className="text-red-600 font-anton text-3xl mb-4">{data.title}</h2>
-                <div className="bg-slate-200 text-slate-700 p-4 shadow-md">
+                <div className="bg-slate-200 text-slate-700 p-4 shadow-md flex flex-wrap justify-around">
                     <BlockRenderer blocks={data.content}/>
                     <Suspense key={currentPage} fallback={null}>
                         {
                             listings.docs.map((listing:Listing) => {
-                                return <div key={listing.id} className="bg-slate-300 shadow-sm mb-6 flex">
+                                return <div key={listing.id} className="bg-slate-100 shadow-sm mb-6 flex w-[48%]">
                                     {
                                         listing.featuredImage && typeof listing.featuredImage !== "number"
                                             ? <Image
-                                                className="size-48 object-cover hidden sm:block"
+                                                className="size-48 aspect-square object-cover hidden sm:block"
                                                 src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${listing.featuredImage.url}`}
                                                 width={listing.featuredImage.width||0}
                                                 height={listing.featuredImage.height || 0}
