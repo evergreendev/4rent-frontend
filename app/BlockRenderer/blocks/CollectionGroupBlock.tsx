@@ -12,7 +12,8 @@ const Button = ({slug, collection}: {
 }
 
 const ListingImageCard = ({slug, collection}: { slug: string, collection: Page | Listing | Location }) => {
-    if (typeof collection.featuredImage === "number" || !process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL) return <></>
+    console.log(collection)
+    if (!collection.featuredImage || typeof collection.featuredImage === "number" || !process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL) return <></>
 
     return <Link href={`/${slug}/${collection.slug}`}
                  className="relative h-96 w-[24%] prose-img:m-0 overflow-hidden group"
