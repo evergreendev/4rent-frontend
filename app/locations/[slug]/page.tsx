@@ -87,8 +87,9 @@ export default async function LocationPage({ params, searchParams }: { params: {
         }
             <div className="bg-white max-w-screen-lg w-full p-8  min-h-screen">
                     <h2 className="text-red-600 font-anton text-3xl mb-4">{data.title}</h2>
+                <BlockRenderer blocks={data.content}/>
                 <div className="bg-slate-200 text-slate-700 p-4 shadow-md flex flex-wrap justify-between">
-                    <BlockRenderer blocks={data.content}/>
+
                     <Suspense key={currentPage} fallback={null}>
                         {
                             listings.docs.map((listing:Listing) => {
