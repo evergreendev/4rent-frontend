@@ -35,7 +35,7 @@ const MediaBlock = ({block}:{block:any}) => {
                             ${i%2 === 0 ? "lg:-translate-y-16 lg:translate-x-36" : "lg:translate-y-40 lg:-translate-x-20" }
                             `}
                             key={image.id}
-                            width={imageObj.width||0}
+                            width={imageObj?.width||0}
                             height={imageObj.height||0}
                             src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${imageObj?.url}`}
                             alt={image.image?.alt||""} />

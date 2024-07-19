@@ -80,7 +80,7 @@ export default async function LocationPage({ params, searchParams }: { params: {
                             object-cover
                             `}
                 key={data.featuredImage.id}
-                width={data.featuredImage.width || 0}
+                width={data.featuredImage?.width || 0}
                 height={data.featuredImage.height || 0}
                 src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${data.featuredImage?.url}`}
                 alt={data.featuredImage?.alt || ""}/> : ""
@@ -98,7 +98,7 @@ export default async function LocationPage({ params, searchParams }: { params: {
                                             ? <Image
                                                 className="size-48 aspect-square object-cover hidden sm:block"
                                                 src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${listing.featuredImage?.url}`}
-                                                width={listing.featuredImage.width||0}
+                                                width={listing.featuredImage?.width||0}
                                                 height={listing.featuredImage.height || 0}
                                                 alt={`${listing.featuredImage?.alt}`}/>
                                             : ""
