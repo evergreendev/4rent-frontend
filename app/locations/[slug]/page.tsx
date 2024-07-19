@@ -82,7 +82,7 @@ export default async function LocationPage({ params, searchParams }: { params: {
                 key={data.featuredImage.id}
                 width={data.featuredImage.width || 0}
                 height={data.featuredImage.height || 0}
-                src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${data.featuredImage.url}`}
+                src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${data.featuredImage?.url}`}
                 alt={data.featuredImage.alt || ""}/> : ""
         }
             <div className="bg-white max-w-screen-lg w-full p-8  min-h-screen">
@@ -97,7 +97,7 @@ export default async function LocationPage({ params, searchParams }: { params: {
                                         listing.featuredImage && typeof listing.featuredImage !== "number"
                                             ? <Image
                                                 className="size-48 aspect-square object-cover hidden sm:block"
-                                                src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${listing.featuredImage.url}`}
+                                                src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${listing.featuredImage?.url}`}
                                                 width={listing.featuredImage.width||0}
                                                 height={listing.featuredImage.height || 0}
                                                 alt={`${listing.featuredImage.alt}`}/>

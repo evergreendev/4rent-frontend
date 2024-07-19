@@ -14,7 +14,7 @@ const MediaBlock = ({block}:{block:any}) => {
             </div>
             {
                 block.button.ExternalLink
-                    ? <Link className="bg-red-700 hover:bg-red-600 rounded-2xl p-8 py-4 no-underline text-white" href={block.button.Url}>{block.button.ButtonText}</Link>
+                    ? <Link className="bg-red-700 hover:bg-red-600 rounded-2xl p-8 py-4 no-underline text-white" href={block.button?.url}>{block.button.ButtonText}</Link>
                     : <Link className="bg-red-700 hover:bg-red-600 rounded-2xl p-8 py-4 no-underline text-white" href={`${block.button.Page.relationTo}/${block.button.Page.value.slug}`}>{block.button.ButtonText}</Link>
             }
         </div>
@@ -37,7 +37,7 @@ const MediaBlock = ({block}:{block:any}) => {
                             key={image.id}
                             width={imageObj.width||0}
                             height={imageObj.height||0}
-                            src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${imageObj.url}`}
+                            src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${imageObj?.url}`}
                             alt={image.image.alt||""} />
                     }
                 })

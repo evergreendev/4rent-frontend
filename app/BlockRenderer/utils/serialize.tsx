@@ -26,7 +26,7 @@ function serialize(node:any,nodeIndex?:number) {
         case 'li':
             return <li key={nodeIndex}>{children}</li>
         case 'link':
-            return <Link key={nodeIndex} href={escapeHtml(node.url)}>{children}</Link>
+            return <Link key={nodeIndex} href={escapeHtml(node?.url)}>{children}</Link>
 default:
     return children
 }
