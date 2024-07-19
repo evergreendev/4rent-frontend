@@ -83,7 +83,7 @@ export default async function LocationPage({ params, searchParams }: { params: {
                 width={data.featuredImage.width || 0}
                 height={data.featuredImage.height || 0}
                 src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${data.featuredImage?.url}`}
-                alt={data.featuredImage.alt || ""}/> : ""
+                alt={data.featuredImage?.alt || ""}/> : ""
         }
             <div className="bg-white max-w-screen-lg w-full p-8  min-h-screen">
                     <h2 className="text-red-600 font-anton text-3xl mb-4">{data.title}</h2>
@@ -100,7 +100,7 @@ export default async function LocationPage({ params, searchParams }: { params: {
                                                 src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${listing.featuredImage?.url}`}
                                                 width={listing.featuredImage.width||0}
                                                 height={listing.featuredImage.height || 0}
-                                                alt={`${listing.featuredImage.alt}`}/>
+                                                alt={`${listing.featuredImage?.alt}`}/>
                                             : ""
                                     }
                                     <div className="p-4">
