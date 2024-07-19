@@ -36,7 +36,7 @@ const MediaBlock = ({block}:{block:any}) => {
                             `}
                             key={image.id}
                             width={imageObj?.width||0}
-                            height={imageObj.height||0}
+                            height={imageObj?.height||0}
                             src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${imageObj?.url}`}
                             alt={image.image?.alt||""} />
                     }
