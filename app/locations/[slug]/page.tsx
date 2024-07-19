@@ -79,7 +79,7 @@ export default async function LocationPage({ params, searchParams }: { params: {
                             sm:block
                             object-cover
                             `}
-                key={data.featuredImage.id}
+                key={data.featuredImage?.id}
                 width={data.featuredImage?.width || 0}
                 height={data.featuredImage?.height || 0}
                 src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${data.featuredImage?.url}`}
