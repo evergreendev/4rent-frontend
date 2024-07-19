@@ -36,7 +36,7 @@ export default async function Home() {
 
     return (
         <main>
-            <BlockRenderer blocks={data.docs[0].content}/>
+            <BlockRenderer blocks={data.docs[0]?.content || []}/>
         </main>
     );
 }
