@@ -196,77 +196,115 @@ export interface Listing {
     publishedAt?: string | null;
     featuredImage?: number | Media | null;
     company: number | Company;
-    content?:
-        | (
+    locations?: (number | Location)[] | null;
+    gallery?:
         | {
-        content: {
-            [k: string]: unknown;
-        }[];
+        gallery_item?: number | Media | null;
         id?: string | null;
-        blockName?: string | null;
-        blockType: 'ContentBlock';
-    }
+    }[]
+        | null;
+    property_description?:
         | {
-        header: string;
-        showSearch?: boolean | null;
-        image?: number | Media | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'HeaderBlock';
-    }
-        | {
-        title: string;
-        content?:
-            | {
-            [k: string]: unknown;
-        }[]
-            | null;
-        button?: {
-            ButtonText?: string | null;
-            ExternalLink?: boolean | null;
-            Page?:
-                | ({
-                relationTo: 'pages';
-                value: number | Page;
-            } | null)
-                | ({
-                relationTo: 'listings';
-                value: number | Listing;
-            } | null);
-            Url?: string | null;
+        [k: string]: unknown;
+    }[]
+        | null;
+    features?: {
+        unit_amenities?: {
+            items?:
+                | (
+                | 'Air/Heat (central)'
+                | 'Appliances (Brand New)'
+                | 'Breakfast Bar'
+                | 'Cable Ready'
+                | 'Carpeting'
+                | 'Ceiling Fan(s)'
+                | 'Dead Bolt Locks'
+                | 'Dining Area'
+                | 'Dishwasher'
+                | 'Disposal'
+                | 'DSL Ready'
+                | 'Extra Storage'
+                | 'Fully Equipped Kitchen'
+                | 'Internet Access'
+                | 'Large Closet Space'
+                | 'Primary Bedrooms'
+                | 'Microwave'
+                | 'Non-Smoking Units'
+                | 'Pantry Space'
+                | 'Patio or Balcony'
+                | 'Security Monitor'
+                | 'Spacious Bedrooms'
+                | 'Tile Floors'
+                | 'Vaulted Ceilings'
+                | 'Walk-In Closets'
+                | 'Washer Dryer In Unit'
+                | 'Window Blinds'
+                | 'Walk In Shower'
+                )[]
+                | null;
         };
-        images?:
+        community_amenities?: {
+            items?:
+                | (
+                | 'Accepts Electronic Payments'
+                | 'Basketball Court'
+                | 'Business Center/Media Room'
+                | 'Close to Public Transportation'
+                | 'Club House/Community Room'
+                | 'Community Patio'
+                | 'Controlled Access'
+                | 'Corporate/Guest Suite'
+                | 'Dog Park'
+                | 'Elevator'
+                | 'Fitness Center'
+                | 'Maintenance (24hr Emergency)'
+                | 'Non-Smoking Buildings'
+                | 'Handicap Units'
+                | 'Laundry Facilities'
+                | 'Lawn Care'
+                | 'Maintenance (on-site)'
+                | 'Management (on-site)'
+                | 'Near Bike Trails'
+                | 'Near Shopping, Dining, and Entertainment'
+                | 'Non-Smoking Community'
+                | 'Playground'
+                | 'Pool'
+                | 'Professionally Landscaped'
+                | 'Snow Removal'
+                | 'Storage Space Available'
+                | 'Courtyard'
+                )[]
+                | null;
+        };
+        utilities_included?: {
+            items?: ('Electric' | 'Internet' | 'Garbage' | 'Heat' | 'Sewer' | 'Water')[] | null;
+        };
+        parking_options?: {
+            items?: ('Garage Available' | 'Off Street Parking')[] | null;
+        };
+        pets?: {
+            items?: ('Cats Allowed' | 'Dogs Allowed')[] | null;
+        };
+        lease_options?: {
+            items?: ('12 Month' | '6 Month')[] | null;
+        };
+        floorplans?:
             | {
-            image?: number | Media | null;
+            beds?: number | null;
+            bath?: number | null;
+            starting_at?: number | null;
+            sq_ft?: number | null;
             id?: string | null;
         }[]
             | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'MediaBlock';
-    }
-        | {
-        collections: (
-            | {
-            relationTo: 'pages';
-            value: number | Page;
-        }
-            | {
-            relationTo: 'listings';
-            value: number | Listing;
-        }
-            | {
-            relationTo: 'locations';
-            value: number | Location;
-        }
-            )[];
-        type: 'featured_images' | 'buttons';
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'CollectionGroupBlock';
-    }
-        )[]
-        | null;
+        additional_information?: {
+            description?: string | null;
+            application_fee?: string | null;
+            security_deposit?: string | null;
+            pet_deposit?: string | null;
+            pet_rent?: number | null;
+        };
+    };
     street?: string | null;
     city?: string | null;
     state?: string | null;
@@ -425,6 +463,3 @@ export interface SiteOption {
     updatedAt?: string | null;
     createdAt?: string | null;
 }
-
-
-
