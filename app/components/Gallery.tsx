@@ -3,6 +3,8 @@ import {Media} from "@/app/types/payloadTypes";
 import Carousel from "react-multi-carousel";
 import Image from "next/image";
 import {useEffect, useState} from "react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faAngleRight, faAngleLeft, faClose} from "@fortawesome/pro-regular-svg-icons"
 
 const responsive = {
     desktop: {
@@ -62,42 +64,48 @@ const Gallery = ({gallery}: { gallery?: { gallery_item?: number | Media | null, 
             className={`
             ${showModal ? "" : "hidden"}
             absolute
-            inset-28
+            left-1/2
+            top-1/2
+            -translate-y-1/2
+            -translate-x-1/2
+            max-w-full
+            w-[900px]
+            max-h-[90vh]
+            h-[850px]
             z-[9999]
             p-0
             bg-slate-200
             bg-opacity-95
-            border-slate-600
-            border-2
+            shadow-lg
             `}
         >
             {
                 gallery[modalIndex]?.gallery_item && typeof gallery[modalIndex].gallery_item !== "number" &&
-                <div className="flex h-full">
-                    <button className="bg-slate-600 text-slate-950 font-bold hover:bg-slate-300 p-4" onClick={() => {
+                <div className="flex h-full max-w-full">
+                    <button className="bg-slate-600 opacity-70 absolute left-2 self-center rounded-full text-slate-950 font-bold hover:opacity-100 size-11" onClick={() => {
                         setModalIndex(modalIndex - 1)
-                    }}>{"<"}</button>
+                    }}><FontAwesomeIcon size="lg" icon={faAngleLeft} color="white"/></button>
                     <Image
                         src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${gallery[modalIndex].gallery_item?.url}`}
                         alt={gallery[modalIndex].gallery_item?.alt || ""}
                         width={gallery[modalIndex].gallery_item?.width || 0}
                         height={gallery[modalIndex].gallery_item?.height || 0}
-                        className="max-h-full w-auto mx-auto self-center my-3"
+                        className="mx-auto self-center my-3 object-contain max-h-full"
                     />
-                    <button className="bg-slate-600 text-slate-950 font-bold hover:bg-slate-300 p-4" onClick={() => {
+                    <button className="bg-slate-600 opacity-70 absolute right-2 self-center rounded-full text-slate-950 font-bold hover:opacity-100 size-11" onClick={() => {
                         setModalIndex(modalIndex + 1)
-                    }}>{">"}</button>
+                    }}><FontAwesomeIcon size="lg" icon={faAngleRight} color="white"/></button>
                 </div>
 
             }
             <button onClick={() => {
                 setShowModal(false)
-            }} className="absolute right-0 top-0 px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-bold">Close
+            }} className="absolute right-2 top-2 size-8 rounded-full bg-red-300 hover:bg-red-500 text-white font-bold"><FontAwesomeIcon size="sm" icon={faClose} color="white"/>
             </button>
         </div>
         <div className={`
         ${showModal ? "" : "hidden"}
-        inset-0 z-[9998] bg-black opacity-50 absolute`} onClick={() => {
+        inset-0 z-[9998] bg-black opacity-40 absolute`} onClick={() => {
             setShowModal(false)
         }}/>
         <Carousel
