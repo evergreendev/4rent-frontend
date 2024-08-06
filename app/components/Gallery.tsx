@@ -65,15 +65,16 @@ const Gallery = ({gallery}: { gallery?: { gallery_item?: number | Media | null, 
             inset-28
             z-[9999]
             p-0
-            bg-zinc-100
-            border-blue-100
+            bg-slate-200
+            bg-opacity-95
+            border-slate-600
             border-2
             `}
         >
             {
                 gallery[modalIndex]?.gallery_item && typeof gallery[modalIndex].gallery_item !== "number" &&
                 <div className="flex h-full">
-                    <button className="bg-slate-200 hover:bg-slate-300 p-4" onClick={() => {
+                    <button className="bg-slate-600 text-slate-950 font-bold hover:bg-slate-300 p-4" onClick={() => {
                         setModalIndex(modalIndex - 1)
                     }}>{"<"}</button>
                     <Image
@@ -83,7 +84,7 @@ const Gallery = ({gallery}: { gallery?: { gallery_item?: number | Media | null, 
                         height={gallery[modalIndex].gallery_item?.height || 0}
                         className="max-h-full w-auto mx-auto self-center my-3"
                     />
-                    <button className="bg-slate-200 hover:bg-slate-300 p-4" onClick={() => {
+                    <button className="bg-slate-600 text-slate-950 font-bold hover:bg-slate-300 p-4" onClick={() => {
                         setModalIndex(modalIndex + 1)
                     }}>{">"}</button>
                 </div>
