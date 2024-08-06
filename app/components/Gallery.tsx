@@ -24,15 +24,36 @@ const responsive = {
 
 const Gallery = ({gallery}: { gallery?: { gallery_item?: number | Media | null, id?: string | null }[] | null }) => {
     const [showModal, setShowModal] = useState(false);
-    const [modalSrc, setModalSrc] = useState<Media | null>(null);
+    const [modalIndex, setModalIndex] = useState(0);
 
     useEffect(() => {
         document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape"){
-                setShowModal(false);
+            switch (e.key) {
+                case "Escape":
+                    setShowModal(false);
+                    break;
+/*                case "ArrowLeft":
+                    if (showModal) {
+                        setModalIndex(modalIndex - 1);
+                    }
+                    break;
+                case "ArrowRight":
+                    if (showModal) {
+                        setModalIndex(modalIndex + 1);
+                    }
+                    break;*/
+                default:
+                    break;
             }
         })
-    }, []);
+    }, [showModal, modalIndex]);
+
+    useEffect(() => {
+        if (!gallery?.length) return;
+
+        if (modalIndex >= gallery.length) setModalIndex(0);
+        if (modalIndex < 0) setModalIndex(gallery.length - 1);
+    }, [modalIndex, gallery?.length]);
 
     if (!gallery) return;
 
@@ -43,27 +64,41 @@ const Gallery = ({gallery}: { gallery?: { gallery_item?: number | Media | null, 
             absolute
             inset-28
             z-[9999]
-            p-4
+            p-0
             bg-zinc-100
             border-blue-100
             border-2
             `}
         >
             {
-                modalSrc &&
-                <Image
-                    src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${modalSrc?.url}`}
-                    alt={modalSrc?.alt || ""}
-                    width={modalSrc.width||0}
-                    height={modalSrc.height||0}
-                    className="h-full w-auto mx-auto"
-                />
+                gallery[modalIndex]?.gallery_item && typeof gallery[modalIndex].gallery_item !== "number" &&
+                <div className="flex h-full">
+                    <button className="bg-slate-200 hover:bg-slate-300 p-4" onClick={() => {
+                        setModalIndex(modalIndex - 1)
+                    }}>{"<"}</button>
+                    <Image
+                        src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${gallery[modalIndex].gallery_item?.url}`}
+                        alt={gallery[modalIndex].gallery_item?.alt || ""}
+                        width={gallery[modalIndex].gallery_item?.width || 0}
+                        height={gallery[modalIndex].gallery_item?.height || 0}
+                        className="max-h-full w-auto mx-auto self-center my-3"
+                    />
+                    <button className="bg-slate-200 hover:bg-slate-300 p-4" onClick={() => {
+                        setModalIndex(modalIndex + 1)
+                    }}>{">"}</button>
+                </div>
+
             }
-            <button onClick={() => {setShowModal(false)}} className="absolute right-0 top-0 px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-bold">Close</button>
+            <button onClick={() => {
+                setShowModal(false)
+            }} className="absolute right-0 top-0 px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-bold">Close
+            </button>
         </div>
         <div className={`
         ${showModal ? "" : "hidden"}
-        inset-0 z-[9998] bg-black opacity-50 absolute`} onClick={() => {setShowModal(false)}}/>
+        inset-0 z-[9998] bg-black opacity-50 absolute`} onClick={() => {
+            setShowModal(false)
+        }}/>
         <Carousel
             swipeable={false}
             draggable={false}
@@ -81,13 +116,13 @@ const Gallery = ({gallery}: { gallery?: { gallery_item?: number | Media | null, 
             itemClass="carousel-item-padding-40-px"
         >
             {
-                gallery.map(item => {
+                gallery.map((item, i) => {
                     if (typeof item.gallery_item !== "number" && item.gallery_item) {
                         return <Image
                             className="w-full"
                             onClick={() => {
                                 setShowModal(true);
-                                setModalSrc(item.gallery_item as Media)
+                                setModalIndex(i);
                             }}
                             src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${item.gallery_item?.sizes?.thumbnail?.url}`}
                             alt={item.gallery_item?.alt || ""}
