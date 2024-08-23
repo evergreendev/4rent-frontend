@@ -45,8 +45,8 @@ export default async function RootLayout({
         <div className="absolute overflow-auto left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 shadow p-6 inset-0 z-[1000] max-w-screen-lg w-full bg-slate-100 h-[900px] text-slate-950">
             <Image className="m-auto" src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${meta.siteLogoAlt?.url}` || ""} alt={meta.siteLogoAlt?.alt || ""}
                    width={meta.siteLogoAlt?.width || 200} height={meta.siteLogoAlt?.height || 200}/>
-            <h2 className="text-red-600 mb-6 text-center font-anton text-5xl">Are you an owner or manager of an apartment complex or rental property in the Black Hills?</h2>
-            <p className="text-4xl text-gray-800 text-center max-w-prose">Cut through the noise and price of big online directories and be seen on the Black Hill’s newest and most
+            <h2 className="text-red-600 mb-6 text-center font-anton text-2xl md:text-4xl">Are you an owner or manager of an apartment complex or rental property in the Black Hills?</h2>
+            <p className="text-xl md:text-2xl text-gray-800 text-center max-w-prose">Cut through the noise and price of big online directories and be seen on the Black Hill’s newest and most
                 curated renter’s guide, 4Rent Black Hills.</p>
             <ContactForm/>
         </div>
