@@ -16,8 +16,8 @@ const Map = ({listings}:{listings:Listing[]}) => {
         const map = Radar.ui.map({
             container: 'map',
             style: 'radar-default-v1',
-            center: [-103.2310,43.0805],
-            zoom: 11,
+            center: [parseFloat(listings[0]?.longitude || "0"), parseFloat(listings[0]?.latitude||"0")],
+            zoom: 15,
         });
 
         listings.forEach(listing => {
@@ -30,7 +30,9 @@ const Map = ({listings}:{listings:Listing[]}) => {
 
         })
 
-        map.fitToMarkers();
+        if(listings.length > 1){
+            map.fitToMarkers();
+        }
 
 
     }, [listings]);

@@ -6,6 +6,8 @@ import Link from "next/link";
 function serialize(node:any,nodeIndex?:number) {
     nodeIndex = nodeIndex ? nodeIndex + 1 : 0;
 
+    if (!node) return;
+
     if (Text.isText(node)) {
         return <React.Fragment key={node.text}>{node.text}</React.Fragment>
     }
