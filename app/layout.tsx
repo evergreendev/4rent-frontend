@@ -42,7 +42,7 @@ export default async function RootLayout({
         <html lang="en">
         <GoogleTagManager gtmId={"G-5B97XL2RJB"}/>
         <body className={`${inter.className} overflow-y-hidden`}>
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 shadow p-6 inset-0 z-[1000] max-w-screen-lg w-full bg-slate-100 h-[900px] text-slate-950">
+        <div className="absolute overflow-auto left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 shadow p-6 inset-0 z-[1000] max-w-screen-lg w-full bg-slate-100 h-[900px] text-slate-950">
             <Image className="m-auto" src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${meta.siteLogoAlt?.url}` || ""} alt={meta.siteLogoAlt?.alt || ""}
                    width={meta.siteLogoAlt?.width || 200} height={meta.siteLogoAlt?.height || 200}/>
             <h2 className="text-red-600 mb-6 text-center font-anton text-5xl">Are you an owner or manager of an apartment complex or rental property in the Black Hills?</h2>
