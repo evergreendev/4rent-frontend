@@ -5,7 +5,7 @@ import Header from "@/app/components/Header";
 import Image from "next/image";
 import React from "react";
 import ContactForm from "@/app/components/ContactForm";
-import { GoogleTagManager } from "@next/third-parties/google"
+import { GoogleAnalytics } from "@next/third-parties/google"
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -40,7 +40,7 @@ export default async function RootLayout({
     const meta = await getMeta();
     return (
         <html lang="en">
-        <GoogleTagManager gtmId={"G-5B97XL2RJB"}/>
+        <GoogleAnalytics gaId={"G-5B97XL2RJB"}/>
         <body className={`${inter.className} overflow-y-hidden`}>
         <div className="absolute overflow-auto left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 shadow p-6 inset-0 z-[1000] max-w-screen-lg w-full bg-slate-100 h-[900px] text-slate-950">
             <Image className="m-auto" src={`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}${meta.siteLogoAlt?.url}` || ""} alt={meta.siteLogoAlt?.alt || ""}
